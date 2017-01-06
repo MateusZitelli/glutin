@@ -217,6 +217,14 @@ impl GlContext for Window {
     }
 
     #[inline]
+    fn clear_current(&self) -> Result<(), ContextError> {
+        match self {
+            &Window::X(ref w) => w.clear_current(),
+            &Window::Wayland(ref w) => w.clear_current()
+        }
+    }
+
+    #[inline]
     fn is_current(&self) -> bool {
         match self.display_server {
             DisplayServer::X(ref w) => w.is_current(),

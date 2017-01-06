@@ -141,6 +141,12 @@ impl GlContext for OsMesaContext {
     }
 
     #[inline]
+    fn clear_current(&self) -> Result<(), ContextError> {
+        // Not sure what to do here
+        Ok(())
+    }
+
+    #[inline]
     fn is_current(&self) -> bool {
         unsafe { osmesa_sys::OSMesaGetCurrentContext() == self.context }
     }

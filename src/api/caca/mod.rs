@@ -247,6 +247,14 @@ impl GlContext for Window {
     }
 
     #[inline]
+    fn clear_current(&self) -> Result<(), ContextError> {
+        unsafe {
+            self.opengl.clear_current()
+        }
+    }
+
+
+    #[inline]
     fn is_current(&self) -> bool {
         self.opengl.is_current()
     }

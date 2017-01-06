@@ -281,6 +281,23 @@ impl GlContext for Context {
         }
     }
 
+    fn clear_current(&self) -> Result<(), ContextError> {
+        let ret = unsafe {
+            self.egl.MakeCurrent(self.display, self.surface, self.surface, self.context)
+        };
+
+        if ret == 0 {
+            unsafe {
+                match self.egl.GetError() as u32 {
+                    ffi::egl::CONTEXT_LOST => return Err(ContextError::ContextLost),
+                    err => panic!("eglMakeCurrent failed (eglGetError returned 0x{:x})", err)
+                }
+            }
+        } else {
+            Ok(())
+        }
+    }
+
     #[inline]
     fn is_current(&self) -> bool {
         unsafe { self.egl.GetCurrentContext() == self.context }

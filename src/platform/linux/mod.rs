@@ -47,6 +47,11 @@ impl GlContext for HeadlessContext {
     }
 
     #[inline]
+    fn clear_current(&self) -> Result<(), ContextError> {
+        self.0.clear_current()
+    }
+
+    #[inline]
     fn is_current(&self) -> bool {
         self.0.is_current()
     }

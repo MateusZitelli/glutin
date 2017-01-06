@@ -20,6 +20,8 @@ use std::{mem, ptr};
 pub mod ffi {
     pub use x11_dl::xlib::*;
     pub use self::glx::types::GLXContext;
+    use api::x11::ffi;
+    use x11_dl::glx::GLX_NONE;
 
     /// GLX bindings
     pub mod glx {
@@ -112,6 +114,16 @@ impl GlContext for Context {
             panic!("glx::MakeCurrent failed");
         }
         Ok(())
+    }
+
+    fn clear_current(&self) -> Result<(), ContextError> {
+        unsafe {
+            let res = self.glx.MakeCurrent(self.display as *mut _, 0, ptr::null());
+            if res == 0 {
+                panic!("glx::MakeCurrent failed");
+            }
+            Ok(())
+        }
     }
 
     #[inline]

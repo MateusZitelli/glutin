@@ -55,6 +55,13 @@ impl GlContext for HeadlessContext {
         Ok(())
     }
 
+    fn clear_current(&self) -> Result<(), ContextError> {
+        unsafe {
+            NSOpenGLContext::clearCurrentContext(nil);
+        }
+        Ok(())
+    }
+
     #[inline]
     fn is_current(&self) -> bool {
         unimplemented!()
